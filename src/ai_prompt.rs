@@ -58,31 +58,31 @@ impl AIPrompt {
 
                     Question: {query}
 
-                    Provide a focused answer to the question based on the changes shown above.
+                    Provide a focused answer in japanses to the question based on the changes shown above.
                     "
                 }
             }
             None => match &command.git_entity {
                 GitEntity::Commit(_) => formatdoc! {"
                     {base_content}
-                    
-                    Provide a short explanation covering:
+
+                    Provide a short explanation in japanese covering:
                     1. Core changes made
                     2. Direct impact
                     "
                 },
                 GitEntity::Diff(Diff::WorkingTree { .. }) => formatdoc! {"
                     {base_content}
-                    
-                    Provide:
+
+                    Provide answer in japanese:
                     1. Key changes
                     2. Notable concerns (if any)
                     "
                 },
                 GitEntity::Diff(Diff::CommitsRange { .. }) => formatdoc! {"
                     {base_content}
-                    
-                    Provide:
+
+                    Provide answer in japanese:
                     1. Core changes made
                     2. Direct impact
                     "
@@ -105,7 +105,7 @@ impl AIPrompt {
 
         let system_prompt = String::from(indoc! {"
             You are a commit message generator that follows these rules:
-            1. Write in present tense
+            1. Write in present tense, in japanese
             2. Be concise and direct
             3. Output only the commit message without any explanations
             4. Follow the format: <type>(<optional scope>): <commit message>
@@ -123,7 +123,7 @@ impl AIPrompt {
         };
 
         let user_prompt = String::from(formatdoc! {"
-            Generate a concise git commit message written in present tense for the following code diff with the given specifications below:
+            Generate a concise git commit message written in japanese in present tense for the following code diff with the given specifications below:
 
             The output response must be in format:
             <type>(<optional scope>): <commit message>
